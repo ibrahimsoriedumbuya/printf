@@ -1,63 +1,50 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include <stdarg.h>
-#include <stdio.h>
+
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
-#define UNUSED(x) (void)(x)
-#define BUFF_SIZE 1024
+/* utils.c */
+int _strlen(const char *);
+int print(char *);
+char *itoa(long int, int);
 
-/* FLAGS */
-#define F_MINUS 1
-#define F_PLUS 2
-#define F_ZERO 4
-#define F_HASH 8
-#define F_SPACE 16
+/* printf.c */
+int _printf(const char *, ...);
 
-/* SIZES */
-#define S_LONG 2
-#define S_SHORT 1
+/* handler.c */
+int handler(const char *, va_list);
+int percent_handler(const char *, va_list, int *);
+
+/* printers */
+int print_string(va_list);
+int print_char(va_list);
+int print_integer(va_list);
+int print_binary(va_list);
+int print_rot(va_list);
+int print_unsigned(va_list);
+int print_octal(va_list);
+int print_hexadecimal_low(va_list);
+int print_hexadecimal_upp(va_list);
+int print_pointer(va_list);
+int print_rev_string(va_list);
+
+/* _putchar.c */
+int _putchar(char);
+int buffer(char);
 
 /**
- * struct fmt - Struct op
+ * struct _format - Typedef struct...
  *
- * @fmt: The format.
- * @fn: The function associated.
- */
-struct fmt
+ * @type: Format
+ * @f: The function associated
+ **/
+typedef struct _format
 {
-	char fmt;
-	int (*fn)(va_list, char[], int, int, int, int);
-};
+	char type;
+	int (*f)(va_list);
+} format;
 
 
-/**
- * typedef struct fmt fmt_t - Struct op
- *
- * @fmt: The format.
- * @fm_t: The function associated.
- */
-typedef struct fmt fmt_t;
-
-int _printf(const char *format, ...);
-int handle_print(const char *fmt, int *i,
-va_list list, char buffer[], int flags, int width, int precision, int size);
-
-/****************** FUNCTIONS ******************/
-
-/* Funtions to print chars and strings */
-int print_char(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-int print_string(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-int print_percent(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-
-/* Functions to print numbers */
-int print_int(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-int print_binary(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-int print_unsigned(va_list types, char buffer[],
-	int flags, int width, int precision, int size);
-
+#endif /* MAIN_H */
